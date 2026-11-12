@@ -84,7 +84,7 @@ C=[0]
 def T(o,B):o.sort(key=lambda m:-V[(B.get(m[1])or"p").lower()])
 def S(B,t,c,e,d,a,b):
  C[0]+=1
- if C[0]>10000:raise Exception
+ if C[0]>3000:raise Exception
  w=t=="w";o=G(B,t,c,e)
  if not o:
   k=[s for s,z in B.items() if z==("K" if w else"k")][0]
@@ -104,7 +104,7 @@ def R(B,t,c,e):
  w=t=="w";o=G(B,t,c,e)
  T(o,B)
  b=o[0]if o else((0,0),(0,0),"")
- for d in(1,2,3,4,5):
+ for d in(1,2,3,4):
   C[0]=0;v=-99999;m2=b
   try:
    for m in o:
@@ -112,7 +112,7 @@ def R(B,t,c,e):
     if s>v:v=s;m2=m
   except Exception:break
   b=m2
-  if C[0]>9000:break
+  if C[0]>2500:break
  return b
 def W(m):
  (r,f),(x,y),q=m;return F[f]+str(r+1)+F[y]+str(x+1)+q
