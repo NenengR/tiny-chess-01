@@ -15,14 +15,14 @@ def P(s):
 def H(B,r,f,w):
  for y in(-1,1):
   if B.get((r-1 if w else r+1,f+y))==("P" if w else"p"):return 1
- for a,b in N:
-  if B.get((r+a,f+b))==("N" if w else"n"):return 1
+ for a,b in N+D:
+  if B.get((r+a,f+b))==(("N" if w else"n")if(a,b)in N else("K" if w else"k")):return 1
  for a,b in D:
   x,y=r+a,f+b
   while 0<=x<8 and 0<=y<8:
    z=B.get((x,y))
    if z:
-    if z==("K" if w else"k")or(a*b==0 and z in("R" if w else"r","Q" if w else"q"))or(a*b and z in("B" if w else"b","Q" if w else"q")):return 1
+    if(a*b==0 and z in("R" if w else"r","Q" if w else"q"))or(a*b and z in("B" if w else"b","Q" if w else"q")):return 1
     break
    x+=a;y+=b
  return 0
@@ -81,6 +81,7 @@ def E(B):
   s+=g*v
  return s
 C=[0]
+def T(o,B):o.sort(key=lambda m:-V[(B.get(m[1])or"p").lower()])
 def S(B,t,c,e,d,a,b):
  C[0]+=1
  if C[0]>10000:raise Exception
@@ -92,7 +93,7 @@ def S(B,t,c,e,d,a,b):
   s=E(B)*(1 if w else-1)
   if s>=b:return b
   if s>a:a=s
- o.sort(key=lambda m:-V[(B.get(m[1])or"p").lower()])
+ T(o,B)
  for m in o:
   if d<=0 and B.get(m[1])is None and not m[2]:continue
   B2,c2,e2=MV(B,m,c);s=-S(B2,"b" if w else"w",c2,e2,d-1,-b,-a)
@@ -101,8 +102,8 @@ def S(B,t,c,e,d,a,b):
  return a
 def R(B,t,c,e):
  w=t=="w";o=G(B,t,c,e)
- o.sort(key=lambda m:-V[(B.get(m[1])or"p").lower()])
- b=o[0]
+ T(o,B)
+ b=o[0]if o else((0,0),(0,0),"")
  for d in(1,2,3,4,5):
   C[0]=0;v=-99999;m2=b
   try:
